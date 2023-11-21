@@ -47,9 +47,31 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const updateUserRole = async (req, res) => {
+    const userId = req.body.id;
+    const newRole = req.body.role;
+    if (!userId || !newRole) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        const result = await userDB._updateUserRole(userId, newRole);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ "message": `Updated user's ${userId} role to ${newRole}` });
+        } else {
+            return res.sendStatus(404);
+        }
+        
+    } catch (err) {
+        console.log(err);
+        return res.sendStatus(500);
+    }
+}
+
 module.exports = {
     getUsers,
     getUserByID,
     getUserByUN,
-    deleteUser
+    deleteUser,
+    updateUserRole
 }
