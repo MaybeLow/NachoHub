@@ -5,6 +5,8 @@
 - Executes CRUD operations.
 - Operates on the MVC programming pattern.
 - Front-end is made with React and Tailwind CSS.
-- Back-end is built with Node.js and Express.
+- Backend is built with Node.js and Express.
 - Database management is done with MySQL.
 - Makes use of JWT.
+
+Backend is complete, frontend is early in development.
