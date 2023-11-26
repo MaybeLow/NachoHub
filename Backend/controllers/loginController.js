@@ -3,9 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
-    const cookies = req.cookies;
-    if (cookies?.jwt) return res.status(400).json({ 'message': 'Already authorized' });
-
     const { user, pwd } = req.body;
     if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
 
@@ -43,7 +40,7 @@ const handleLogin = async (req, res) => {
             await userDB._updateRefreshToken(foundUser.user_id, refreshToken);
 
             // Creates Secure Cookie with refresh token
-            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000, secure: true });
 
             // Send authorization role and access token to user
             const role = foundUser.role;

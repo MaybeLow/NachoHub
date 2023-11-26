@@ -1,18 +1,19 @@
 import { React, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
     const [user, setUsername] = useState('');
     const [pwd, setPassword] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({user, pwd});
-        axios.post("/login", {user, pwd})
+        axios.post("http://localhost:3000/login", {user, pwd}, { withCredentials: true })
             .then(response => {
-                console.log(response);
-                localStorage.setItem('JWT', response.accessToken);
-                // Redirect to /
+                localStorage.setItem('JWT', response.data.accessToken);
+                navigate('/');
             })
             .catch(error => {
                 console.log(error);
@@ -31,7 +32,7 @@ const Login = () => {
                 htmlFor="pwd">
                 Password:
             </label>
-            <input type='password' id="pwd" name='pwd' value={pwd} onChange={e => setPassword(e.target.value)} required></input>
+            <input type='password' id="pwd" name='pwd' value={pwd} onChange={e => setPassword(e.target.value)} required aria-label="Username"></input>
 
             <button
                 type='submit'

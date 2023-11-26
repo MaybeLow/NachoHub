@@ -21,7 +21,6 @@ function App() {
           <Route path='communities'></Route>
         </Route>
       </Routes>
-   
   )
 }
 
